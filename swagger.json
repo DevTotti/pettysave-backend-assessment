@@ -1,0 +1,258 @@
+{
+    "swagger": "2.0",
+      "info": {
+        "title": "Task Express API with Swagger",
+        "version": "0.1.0",
+        "description": "This is a CRUD operation for Tasks with Node and Express",
+        "schemes": [
+            "https",
+            "http"
+          ],
+        "consumes": [
+            "application/json"
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "license": {
+          "name": "MIT",
+          "url": "https://spdx.org/licenses/MIT.html"
+        },
+        "contact": {
+          "name": "Paul Osuntolu",
+          "github": "https:www.github.com/DevTotti",
+          "email": "devtotti@gmail.com"
+        }
+      },
+      "servers": [
+        {
+          "url": "http:127.0.0.1:3500"
+        }
+      ],
+      "paths": {
+        "/users/signup": {
+            "post": {
+              "tags": [
+                "User"
+              ],
+              "summary": "Create user",
+              "description": "Create User account",
+              "operationId": "createUser",
+              "produces": [
+                "application/xml",
+                "application/json"
+              ],
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "body",
+                  "description": "Created user object",
+                  "required": true
+                 
+                }
+              ],
+              "responses": {
+                "default": {
+                  "description": "user created"
+                }
+              }
+            }
+          },
+        "/users/signin": {
+        "post": {
+            "tags": [
+            "User"
+            ],
+            "summary": "Sign-in user",
+            "description": "Sign user in to create a token",
+            "operationId": "createUser",
+            "produces": [
+            "application/xml",
+            "application/json"
+            ],
+            "parameters": [
+            {
+                "in": "body",
+                "name": "body",
+                "description": "Created user object",
+                "required": true
+                
+            }
+            ],
+            "responses": {
+            "default": {
+                "description": "You logged in successfully!"
+            }
+            }
+        }
+        },
+        "/task/:id": {
+        "get": {
+            "tags": [
+            "Task"
+            ],
+            "summary": "Find task by ID",
+            "description": "This can only be done by the logged in user.",
+            "operationId": "getTaskById",
+            "produces": [
+            "application/xml",
+            "application/json"
+            ],
+            "parameters": [
+            {
+                "name": "taskId",
+                "in": "path",
+                "description": "ID of Task that needs to be fetched",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+            },
+            {
+                "name": "Authorization",
+                "in": "header",
+                "required": true,
+                "type": "string"
+            }
+            ],
+            "responses": {
+            "200": {
+                "description": "task fetched"
+            }
+            }
+        },
+        "put": {
+            "tags": [
+                "Task"
+            ],
+            "summary": "Update Task",
+            "description": "This can only be done by the logged in user.",
+            "operationId": "updateTask",
+            "produces": [
+                "application/xml",
+                "application/json"
+            ],
+            "parameters": [
+                {
+                "name": "taskId",
+                "in": "path",
+                "description": "Task that needs to be updated",
+                "required": true,
+                "type": "string"
+                },
+                {
+                "name": "Authorization",
+                "in": "header",
+                "required": true,
+                "type": "string"
+                },
+                {
+                "in": "body",
+                "name": "field",
+                "description": "Task object field to be updated",
+                "required": true
+                
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "task updated"
+                }
+            }
+            },
+            "delete": {
+            "tags": [
+                "Task"
+            ],
+            "summary": "Deletes a Task",
+            "description": "This can only be done by the logged in user.",
+            "operationId": "deleteTask",
+            "produces": [
+                "application/xml",
+                "application/json"
+            ],
+            "parameters": [
+                {
+                "name": "Authorization",
+                "in": "header",
+                "required": true,
+                "type": "string"
+                },
+                {
+                "name": "taskId",
+                "in": "path",
+                "description": "task id to delete",
+                "required": true,
+                "type": "integer",
+                "format": "int64"
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "Task deleted"
+                }
+            }
+            }
+        },
+        "/task": {
+            "post": {
+                "tags": [
+                "Task"
+                ],
+                "summary": "Create task",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "createTask",
+                "produces": [
+                "application/xml",
+                "application/json"
+                ],
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "description": "Created Task object",
+                    "required": true
+                    
+                },
+                {
+                    "name": "Authorization",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                }
+                ],
+                "responses": {
+                "default": {
+                    "description": "task created"
+                }
+                }
+            }
+        },
+        "/tasks": {
+            "get": {
+                "tags": [
+                "Task"
+                ],
+                "summary": "Get task",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "getTask",
+                "produces": [
+                "application/xml",
+                "application/json"
+                ],
+                "parameters": [
+                {
+                    "name": "Authorization",
+                    "in": "header",
+                    "required": true,
+                    "type": "string"
+                }
+                ],
+                "responses": {
+                "default": {
+                    "description": "task fetched"
+                }
+                }
+            }
+        }
+    }
+}
