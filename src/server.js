@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { config } = require('dotenv');
 const http = require('http');
 const app = require('./app');
