@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-// const { ObjectId } = require('mongodb');
 const User = require('./user.model');
 const config = require('../configs/app');
 
 const userService = {
-
+  // User can sign up.
   async signup(req, res) {
     const {
       first_name, last_name, address, email, password,
@@ -34,6 +33,7 @@ const userService = {
     }
   },
 
+  // User can sign in.
   async login(req, res, next) {
     try {
       passport.authenticate('local', (err, user) => {
@@ -50,7 +50,6 @@ const userService = {
       res.json(error);
     }
   },
-
 };
 
 module.exports = { ...userService };

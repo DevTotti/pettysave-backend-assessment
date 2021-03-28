@@ -23,7 +23,9 @@ const validator = (req, res, next) => {
   if (errors.length === 0) return next();
   const error = new Error(`${errors[0].param}: ${errors[0].msg}`);
   error.status = 422;
-  throw error;
+  return res.status(error.status).json({
+    Error: { status: error.status, message: error.message },
+  });
 };
 
 module.exports = {

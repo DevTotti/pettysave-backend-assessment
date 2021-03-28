@@ -2,12 +2,13 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-mixed-operators */
 const jwt = require('jsonwebtoken');
-const { secret } = require('./app');
+const { secret } = require('../configs/app');
 
 function auth(req, res, next) {
   let token = req.headers.authorization;
   if (!token) {
     return res.status(403).json({
+      statusCode: 403,
       auth: false,
       error: 'No token provided',
     });
@@ -17,6 +18,7 @@ function auth(req, res, next) {
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       return res.status(401).json({
+        statusCode: 401,
         auth: false,
         message: err.message,
       });

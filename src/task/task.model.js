@@ -19,7 +19,6 @@ const schema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'in-progress', 'completed'],
     default: 'pending',
-    required: [true, 'Status field is required'],
   },
 
 }, { timestamps: true });
