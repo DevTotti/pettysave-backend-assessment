@@ -2,25 +2,9 @@
 /* eslint-disable no-undef */
 const expect = require('expect');
 const request = require('supertest');
-const { ObjectId } = require('mongodb');
 
 const Task = require('../task/task.model');
 const config = require('../configs/app');
-
-// const demoTasks = [{
-//   _id: new ObjectId(),
-//   user_id: new ObjectId(),
-//   title: 'Task title',
-//   description: 'Task title',
-//   status: 'pending',
-// }, {
-//   _id: new ObjectId(),
-//   user_id: new ObjectId(),
-//   title: 'Task title',
-//   description: 'Task title',
-//   status: 'pending',
-// }];
-
 const app = require('../app');
 
 const url = '/api/v1';
@@ -74,9 +58,41 @@ describe('GET /tasks', () => {
     request(app)
       .get(`${url}/tasks`)
       .set('Authorization', `Bearer ${config.token}`)
+      .set('Accept', 'application/json')
       .expect(200)
       .expect((res) => {
-        expect(res.body.data);
+        expect(res.body.data).toBeDefined();
+        expect(Array.isArray(res.body.data)).toBeTruthy();
+      })
+      .end(done);
+  });
+  it('should get a task', (done) => {
+    const id = '606097b8b0014c37b2c08a0e';
+    request(app)
+      .get(`${url}/tasks/${id}`)
+      .set('Authorization', `Bearer ${config.token}`)
+      .set('Accept', 'application/json')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data).toBeDefined();
+        expect(Object(res.body.data)).toBeTruthy();
+      })
+      .end(done);
+  });
+  it('should filter a task by status', (done) => {
+    request(app)
+      .get(`${url}/tasks/filter/status`)
+      .set('Authorization', `Bearer ${config.token}`)
+      .set('Accept', 'application/json')
+      .send({
+        status: 'pending' || 'in-progress' || 'completed',
+      })
+      .expect(200)
+      .expect((req) => {
+        expect(req.body.status).toBeDefined();
+        expect(req.body.status).toEqual('success');
+        expect(req.body.data).toBeDefined();
+        expect(Array.isArray(req.body.data)).toBeTruthy();
       })
       .end(done);
   });
